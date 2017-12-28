@@ -11,6 +11,7 @@
  *          "Imam Fahrizal Rahmat",
  *          "Kurniawan Prima A"
  *      },
+ *      "repository": "https://github.com/wawancallahan/marketku"
  * }
  * 
  * 
@@ -66,32 +67,32 @@ int main()
      * */
     int codeItemMakanan[10] = { 101, 102, 103, 104, 105, 106, 107, 108, 109, 110 };
     
-    char namaItemMakanan[10][30] = { "Makanan 1", "Makanan 2", "Makanan 3", "Makanan 4",
-                                     "Makanan 5", "Makanan 6", "Makanan 7", "Makanan 8",
-                                     "Makanan 9", "Makanan 10" };
+    char namaItemMakanan[10][30] = { "Vanilla Beans", "Roti Gandum", "Doritos", "Sosis",
+                                     "Marshmellow", "Indomie", "Cultured Butter", "Creme Fraiche",
+                                     "Artichoke Hearts", "Walnut" };
     
-    int hargaItemMakanan[10] = { 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000,
-                                 10000 };
+    int hargaItemMakanan[10] = { 4500, 3700, 6900, 2400, 7500, 2300, 7000, 10000, 2000,
+                                 3400 };
                                  
                                  
     int codeItemMinuman[10] = { 111, 112, 113, 114, 115, 116, 117, 118, 119, 120 };
     
-    char namaItemMinuman[10][30] = { "Minuman 1", "Minuman 2", "Minuman 3", "Minuman 4",
-                                     "Minuman 5", "Minuman 6", "Minuman 7", "Minuman 8",
-                                     "Minuman 9", "Minuman 10" };
+    char namaItemMinuman[10][30] = { "Ensure Susu", "Produgen Gold", "Vidoran XMart", "Torany Sirup",
+                                     "Kiyora Tea", "Nescafe", "Coolant", "Minute Maid",
+                                     "Buavita", "Q Guava" };
     
-    int hargaItemMinuman[10] = { 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000,
-                                 10000 };
+    int hargaItemMinuman[10] = { 3500, 2000, 2300, 1500, 1800, 3300, 3600, 6000, 7000,
+                                 5800 };
                                  
                                  
     int codeItemKebutuhanPokok[10] = { 121, 122, 123, 124, 125, 126, 127, 128, 129, 130 };
     
-    char namaItemKebutuhanPokok[10][30] = { "KebutuhanPokok 1", "KebutuhanPokok 2", "KebutuhanPokok 3", "KebutuhanPokok 4",
-                                     "KebutuhanPokok 5", "KebutuhanPokok 6", "KebutuhanPokok 7", "KebutuhanPokok 8",
-                                     "KebutuhanPokok 9", "KebutuhanPokok 10" };
+    char namaItemKebutuhanPokok[10][30] = { "Avena Minyak Goreng", "Beras Muncul", "Gula Merah Curah ", "Gula Pasir",
+                                     "Rose Brand", "Daging Sapi", "Ikan Bandeng", "Telur Ayam Ras",
+                                     "Cabe Merah Keriting", "Margarin Blueband Cup" };
     
-    int hargaItemKebutuhanPokok[10] = { 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000,
-                                 10000 };
+    int hargaItemKebutuhanPokok[10] = { 12000, 15000, 7000, 8000, 18000, 45000, 23000, 2000, 2400,
+                                 19000 };
                                 
     /**
      * Deklarasi Daftar Kode Debit Card & Kredit Card
@@ -168,7 +169,7 @@ int main()
             break;
         case 1:
             Menu:
-            system("clear");
+            system("cls");
             printf("\n\t\t\t\t    Daftar Menu \n");
             
             printf("\t\t\t================================== \n");
@@ -190,7 +191,7 @@ int main()
             do {
                 switch(getMenu) {
                     case 1:
-                        system("clear");
+                        system("cls");
 
                         reCallMenu = 0;
                         setMenu = 1;
@@ -206,7 +207,7 @@ int main()
                         
                         break;
                     case 2:
-                        system("clear");
+                        system("cls");
                         
                         reCallMenu = 0;
                         setMenu = 2;
@@ -222,7 +223,7 @@ int main()
                         
                         break;
                     case 3:
-                        system("clear");
+                        system("cls");
                         
                         reCallMenu = 0;
                         setMenu = 3;
@@ -402,7 +403,7 @@ int main()
             
             BuyFail = 1;
             
-            system("clear");
+            system("cls");
             MenuMore:
             MenuMoreFail:
             printf("\n\t\t====================================================== \n");
@@ -422,12 +423,12 @@ int main()
             
             switch(getMore) {
                 case 1:
-                    system("clear");
+                    system("cls");
                     goto getMoreCurrentMenuLabel;
                     break;
                 case 2:
                     printf("\n");
-                    system("clear");
+                    system("cls");
                     goto Menu;
                     break;
                 case 3:
@@ -436,7 +437,7 @@ int main()
                         goto MenuMoreFail;
                     }
                     
-                    system("clear");
+                    system("cls");
                     
                     printf("\n\t\t\t       Daftar Barang Yang Diambil \n");
                     printf("\t============================================================================================================ \n");
@@ -589,7 +590,7 @@ int main()
                                 }
                                 while(finalTotalPrice > setPayment);
                                 
-                                system("clear");
+                                system("cls");
                                 printf("\n\t\t\t\t\t MarketKu\n");
                                 
                                 printf("\t=========================================================================\n");
@@ -710,7 +711,7 @@ int main()
                                         }
                                         while(DebitFail == 1);
                                         
-                                        system("clear");
+                                        system("cls");
                                         printf("\n\t\t\t\t\t MarketKu\n");
                                         
                                         printf("\t=========================================================================\n");
@@ -808,7 +809,7 @@ int main()
                                         }
                                         while(DebitFail == 1);
                                         
-                                        system("clear");
+                                        system("cls");
                                         printf("\n\t\t\t\t\t MarketKu\n");
                                         
                                         printf("\t=========================================================================\n");
@@ -906,7 +907,7 @@ int main()
                                         }
                                         while(DebitFail == 1);
                                         
-                                        system("clear");
+                                        system("cls");
                                         printf("\n\t\t\t\t\t MarketKu\n");
                                         
                                         printf("\t=========================================================================\n");
@@ -1004,7 +1005,7 @@ int main()
                                         }
                                         while(DebitFail == 1);
                                         
-                                        system("clear");
+                                        system("cls");
                                         printf("\n\t\t\t\t\t MarketKu\n");
                                         
                                         printf("\t=========================================================================\n");
@@ -1131,7 +1132,7 @@ int main()
                                         while(CreditFail == 1);
                                         
                                         
-                                        system("clear");
+                                        system("cls");
                                         printf("\n\t\t\t\t\t MarketKu\n");
                                         
                                         printf("\t=========================================================================\n");
@@ -1228,7 +1229,7 @@ int main()
                                         }
                                         while(CreditFail == 1);
 //                                        
-                                        system("clear");
+                                        system("cls");
                                         printf("\n\t\t\t\t\t MarketKu\n");
                                         
                                         printf("\t=========================================================================\n");
@@ -1326,7 +1327,7 @@ int main()
                                         }
                                         while(CreditFail == 1);
                                         
-                                        system("clear");
+                                        system("cls");
                                         printf("\n\t\t\t\t\t MarketKu\n");
                                         
                                         printf("\t=========================================================================\n");
@@ -1400,11 +1401,11 @@ int main()
                     break;
                 case 4:
                     if(BuyCount < 1) {
-                        system("clear");
+                        system("cls");
                         printf("\nItem Yang Ada Ambil Tidak Ada \n\n");
                         goto MenuMoreFail;
                     }
-                    system("clear");
+                    system("cls");
                     printf("\n");
                     totalPriceInvent = 0;
                     printf("\n\t\t\t\t       Daftar Barang Yang Diambil \n");
@@ -1461,7 +1462,7 @@ int main()
                     
                     switch(getDetailInvent) {
                         case 1:
-                            system("clear");
+                            system("cls");
                             goto MenuMore;
                             break;
                         case 2:
@@ -1515,14 +1516,14 @@ int main()
                                         }
                                         
                                         BuyCount = BuyCount - 1;
-                                        system("clear");
+                                        system("cls");
                                         printf("Item Berhasil Di Kurangi Dan Di Batalkan \n");
                                         
                                         goto MenuMore;
                                     }
                                     
                                     BuyTotal[forRemove] = BuyTotal[forRemove] - getReduceItem;                    
-                                    system("clear");
+                                    system("cls");
                                     printf("Item Berhasil Di Kurangi Jumlahnya \n");
                                     
                                     goto MenuMore;
@@ -1574,7 +1575,7 @@ int main()
                                     }
                                     
                                     BuyCount = BuyCount - 1;
-                                    system("clear");
+                                    system("cls");
                                     printf("Item Berhasil Di Batalkan \n");
                                     
                                     goto MenuMore;
@@ -1609,14 +1610,14 @@ int main()
                     break;
                     
                 default:
-                    system("clear");
+                    system("cls");
                     printf("Menu Hanya Ada Dari 1 - 4 \n");
                     printf("\nApakah Anda Ingin Menambah Item Lagi ? \n");
                     goto MenuMoreFail;
             }
             break;
         case 2:
-            system("clear");
+            system("cls");
             MemberMenusLabel:
             printf("\n\t\t====================================================== \n");
             printf("\t\t| %-7s | %-40s | \n", "1." ,"Daftar Member");
@@ -1634,7 +1635,7 @@ int main()
             
             switch(getMemberMenu) {
                 case 1:
-                    system("clear");
+                    system("cls");
                     printf("\nMasukkan Nama Anda : ");
                     scanf(" %[^\n]%*c", getName);
                     printf("Masukkan Alamat Anda : ");
@@ -1649,12 +1650,11 @@ int main()
                     MemberCountDefault = MemberCountDefault + 1;
                     
                     printf("Data Member Berhasil Dibuat ");
-                    
-                    system("clear");
+   
                     goto MemberMenusLabel;
                     break;
                 case 2:
-                    system("clear");
+                    system("cls");
                     printf("\n");
                     printf("\n\t\t========================\n");
                     printf("\t\t| %-10s | %-5s  | \n", "Kode" ,"Diskon");
@@ -1666,7 +1666,7 @@ int main()
                     goto MemberMenusLabel;
                     break;
                 case 3:
-                    system("clear");
+                    system("cls");
                     goto MenuUtama;
                     break;
                 default:
