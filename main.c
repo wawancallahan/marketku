@@ -20,6 +20,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdbool.h>
+
+int checkInteger(char HandleI[100]);
+bool checkIsDigit(char HandleA[100]);
 
 int main()
 {    
@@ -58,6 +65,8 @@ int main()
      int randomCode;
      
      char getName[100], getAddress[100];
+     
+     int lanjut = 0;
      
      
      int return_value = 0;
@@ -138,7 +147,20 @@ int main()
         10
     };
     
+    int AmbilDiskon;
+    
     int codeMemberCount = sizeof(codeMember) / sizeof(codeMember[0]);
+    
+    /**
+     * Deklarasi Handler
+     * 
+     * 
+     * 
+     */
+     
+     char HandleInt[100] = "";
+    
+    srand(time(NULL));
     
     printf("\t========================================================");
     printf("\n\t|\t\t Selamat Datang Di Marketku\t       |\n");
@@ -149,15 +171,24 @@ int main()
     printf("\n\t\t\t  Menu Utama\n");
     
     printf("\t\t================================== \n");
-    printf("\t\t| %-7s | %-20s | \n", "1.", "Membeli Barang");
+    printf("\t\t| %-7s | %-20s | \n", "1.", lanjut == 0 ? "Membeli Barang" : "Ke Menu Selanjutnya");
     printf("\t\t| %-7s | %-20s | \n", "2.", "Member");
     printf("\t\t| %-7s | %-20s | \n", "0.", "Keluar");
     printf("\t\t================================== \n");
     
     while (!return_value) {
         printf("Masukkan Pilihan ? ");
-        return_value = scanf(" %d", &getMainMenu);
+//        return_value = scanf(" %d", &getMainMenu);
+//        while(getchar() != '\n');
+        scanf(" %s", &HandleInt);
         while(getchar() != '\n');
+        if(checkInteger(HandleInt) == 1) {
+            if(checkIsDigit(HandleInt) == true) {
+                getMainMenu = HandleInt[0] - '0';
+                
+                return_value = 1;
+            }
+        }
     }
     
     return_value = 0;
@@ -168,8 +199,12 @@ int main()
             return 0;
             break;
         case 1:
+            if(lanjut == 1) {
+                system("clear");
+                goto MenuMore;
+            }
             Menu:
-            system("cls");
+            system("clear");
             printf("\n\t\t\t\t    Daftar Menu \n");
             
             printf("\t\t\t================================== \n");
@@ -191,7 +226,7 @@ int main()
             do {
                 switch(getMenu) {
                     case 1:
-                        system("cls");
+                        system("clear");
 
                         reCallMenu = 0;
                         setMenu = 1;
@@ -207,7 +242,7 @@ int main()
                         
                         break;
                     case 2:
-                        system("cls");
+                        system("clear");
                         
                         reCallMenu = 0;
                         setMenu = 2;
@@ -223,7 +258,7 @@ int main()
                         
                         break;
                     case 3:
-                        system("cls");
+                        system("clear");
                         
                         reCallMenu = 0;
                         setMenu = 3;
@@ -403,7 +438,8 @@ int main()
             
             BuyFail = 1;
             
-            system("cls");
+            system("clear");
+            lanjut = 1;
             MenuMore:
             MenuMoreFail:
             printf("\n\t\t====================================================== \n");
@@ -411,10 +447,11 @@ int main()
             printf("\t\t| %-7s | %-40s | \n", "2.", "Pilih Barang Dengan Menu Yang Lain");
             printf("\t\t| %-7s | %-40s | \n", "3.", "Lakukan Pembayaran");
             printf("\t\t| %-7s | %-40s | \n", "4.", "Lihat Barang Yang Telah Diambil");
+            printf("\t\t| %-7s | %-40s | \n", "5.", "Pergi ke Menu Sebelumnya");
             printf("\t\t====================================================== \n");
             
             while (!return_value) {
-                printf("Pilihan : ? ");
+                printf("Pilihan ? : ");
                 return_value = scanf(" %d", &getMore);
                 while(getchar() != '\n');
             }
@@ -423,21 +460,22 @@ int main()
             
             switch(getMore) {
                 case 1:
-                    system("cls");
+                    system("clear");
                     goto getMoreCurrentMenuLabel;
                     break;
                 case 2:
                     printf("\n");
-                    system("cls");
+                    system("clear");
                     goto Menu;
                     break;
                 case 3:
+                    AmbilDiskon = 0;
                     if(BuyCount < 1) {
                         printf("\nItem Yang Ada Ambil Tidak Ada \n\n");
                         goto MenuMoreFail;
                     }
                     
-                    system("cls");
+                    system("clear");
                     
                     printf("\n\t\t\t       Daftar Barang Yang Diambil \n");
                     printf("\t============================================================================================================ \n");
@@ -476,12 +514,12 @@ int main()
                     
                     printf("\t| %86s | %-15d |\n", "Total", totalPrice);
                     
-                    Discount == 0 ? printf("\t| %86s | %-15s |\n", "Diskon", "Tidak Ada Diskon") : printf("\t| %86s | %-15d |\n", "Diskon", Discount);
+                    Discount == 0 ? printf("\t| %86s | %-15s |\n", "Diskon", "Tidak Ada Diskon") : printf("\t| %86s | %-15d %% |\n", "Diskon", Discount);
                     
                     MemberLabel:
                     printf("Apakah Mempunyai Data Member ? (y/n) ");
                     scanf(" %c", &getMember);
-                    
+                    while(getchar() != '\n');
                     if(getMember == 'y' || getMember == 'Y') {
                         do {
                             while (!return_value) {
@@ -497,6 +535,7 @@ int main()
                                     printf("\t| %86s | %-15d%% |\n", "Member", discountCodeMember[forCode]);
                                     MemberOn = 1;
                                     MemberFail = 0;
+                                    AmbilDiskon = forCode;
                                 }
                             }
                             
@@ -506,7 +545,7 @@ int main()
                                 ReplyCodeMember:
                                 printf("Apakah Ingin Mengulangi Kode Member ? (y/n)");
                                 scanf(" %c", &reCodeMember);
-                                
+                                while(getchar() != '\n');
                                 if(reCodeMember == 'y' || reCodeMember == 'Y') {
                                     MemberFail = 1;
                                     
@@ -541,7 +580,8 @@ int main()
                     
                     printf("\t| %86s | %-15s |\n", "Pajak", "10%");
                     
-                    MemberDiscount = MemberOn == 1 ? totalPrice / 10 : 0;
+                    MemberDiscount = MemberOn == 1 ? (totalPrice * discountCodeMember[AmbilDiskon]) / 100 : 0;
+                    
                     DiscountPayment = Discount == 0 ? 0 : (totalPrice * Discount) / 100;
                     
                     finalTotalPrice = totalPrice - DiscountPayment - MemberDiscount + (totalPrice / 10);
@@ -551,7 +591,7 @@ int main()
                     PaymentLabel:
                     printf("Apakah Ingin Membayar ? (y/n) ");
                     scanf(" %c", &getPayment);
-                    
+                    while(getchar() != '\n');
                     if(getPayment == 'y' || getPayment == 'Y') {
                         
                         MethodPaymentLabel:
@@ -590,7 +630,7 @@ int main()
                                 }
                                 while(finalTotalPrice > setPayment);
                                 
-                                system("cls");
+                                system("clear");
                                 printf("\n\t\t\t\t\t MarketKu\n");
                                 
                                 printf("\t=========================================================================\n");
@@ -627,9 +667,9 @@ int main()
                                 
                                 printf("\t| %51s | %-15d |\n", "Total", totalPrice);
                     
-                                Discount == 0 ? printf("") : printf("\t| %51s | %-15d |\n", "Diskon", Discount);
+                                Discount == 0 ? printf("") : printf("\t| %51s | %-15d%% |\n", "Diskon", Discount);
                                 
-                                MemberOn == 1 ? printf("\t| %51s | %-15s |\n", "Member", "10%") : printf("");
+                                MemberOn == 1 ? printf("\t| %51s | %-15d%% |\n", "Member", discountCodeMember[AmbilDiskon]) : printf("");
                                 
                                 printf("\t| %51s | %-15s |\n", "Pajak", "10%");
                                 printf("\t| %51s | %-15d |\n", "Total Keseluruhan", finalTotalPrice);
@@ -689,7 +729,7 @@ int main()
                                                 ReplyCodeDebitCardSatu:
                                                 printf("Apakah Ingin Mengulangi Kode Debit ? (y/n)");
                                                 scanf(" %c", &reCodeDebitCard);
-                                                
+                                                while(getchar() != '\n');
                                                 if(reCodeDebitCard == 'y' || reCodeDebitCard == 'Y') {
                                                     DebitFail = 1;
                                                     
@@ -711,7 +751,7 @@ int main()
                                         }
                                         while(DebitFail == 1);
                                         
-                                        system("cls");
+                                        system("clear");
                                         printf("\n\t\t\t\t\t MarketKu\n");
                                         
                                         printf("\t=========================================================================\n");
@@ -748,9 +788,9 @@ int main()
                                         
                                         printf("\t| %51s | %-15d |\n", "Total", totalPrice);
                             
-                                        Discount == 0 ? printf("") : printf("\t| %51s | %-15d |\n", "Diskon", Discount);
+                                        Discount == 0 ? printf("") : printf("\t| %51s | %-15d%% |\n", "Diskon", Discount);
                                         
-                                        MemberOn == 1 ? printf("\t| %51s | %-15s |\n", "Member", "10%") : printf("");
+                                        MemberOn == 1 ? printf("\t| %51s | %-15d%% |\n", "Member", discountCodeMember[AmbilDiskon]) : printf("");
                                         DebitPayment = DebitOn == 1 ? (totalPrice * 5) / 100 : 0;
                                         printf("\t| %51s | %-15s |\n", "Pajak", "10%");
                                         
@@ -787,7 +827,7 @@ int main()
                                                 ReplyCodeDebitCardDua:
                                                 printf("Apakah Ingin Mengulangi Kode Debit ? (y/n)");
                                                 scanf(" %c", &reCodeDebitCard);
-                                                
+                                                while(getchar() != '\n');
                                                 if(reCodeDebitCard == 'y' || reCodeDebitCard == 'Y') {
                                                     DebitFail = 1;
                                                     
@@ -809,7 +849,7 @@ int main()
                                         }
                                         while(DebitFail == 1);
                                         
-                                        system("cls");
+                                        system("clear");
                                         printf("\n\t\t\t\t\t MarketKu\n");
                                         
                                         printf("\t=========================================================================\n");
@@ -846,9 +886,9 @@ int main()
                                         
                                         printf("\t| %51s | %-15d |\n", "Total", totalPrice);
                             
-                                        Discount == 0 ? printf("") : printf("\t| %51s | %-15d |\n", "Diskon", Discount);
+                                        Discount == 0 ? printf("") : printf("\t| %51s | %-15d%% |\n", "Diskon", Discount);
                                         
-                                        MemberOn == 1 ? printf("\t| %51s | %-15s |\n", "Member", "10%") : printf("");
+                                        MemberOn == 1 ? printf("\t| %51s | %-15d%% |\n", "Member", discountCodeMember[AmbilDiskon]) : printf("");
                                         DebitPayment = DebitOn == 1 ? (totalPrice * 5) / 100 : 0;
                                         printf("\t| %51s | %-15s |\n", "Pajak", "10%");
                                         
@@ -885,7 +925,7 @@ int main()
                                                 ReplyCodeDebitCardTiga:
                                                 printf("Apakah Ingin Mengulangi Kode Debit ? (y/n)");
                                                 scanf(" %c", &reCodeDebitCard);
-                                                
+                                                while(getchar() != '\n');
                                                 if(reCodeDebitCard == 'y' || reCodeDebitCard == 'Y') {
                                                     DebitFail = 1;
                                                     
@@ -907,7 +947,7 @@ int main()
                                         }
                                         while(DebitFail == 1);
                                         
-                                        system("cls");
+                                        system("clear");
                                         printf("\n\t\t\t\t\t MarketKu\n");
                                         
                                         printf("\t=========================================================================\n");
@@ -944,9 +984,9 @@ int main()
                                         
                                         printf("\t| %51s | %-15d |\n", "Total", totalPrice);
                             
-                                        Discount == 0 ? printf("") : printf("\t| %51s | %-15d |\n", "Diskon", Discount);
+                                        Discount == 0 ? printf("") : printf("\t| %51s | %-15d%% |\n", "Diskon", Discount);
                                         
-                                        MemberOn == 1 ? printf("\t| %51s | %-15s |\n", "Member", "10%") : printf("");
+                                        MemberOn == 1 ? printf("\t| %51s | %-15d%% |\n", "Member", discountCodeMember[AmbilDiskon]) : printf("");
                                         DebitPayment = DebitOn == 1 ? (totalPrice * 5) / 100 : 0;
                                         printf("\t| %51s | %-15s |\n", "Pajak", "10%");
                                         
@@ -983,7 +1023,7 @@ int main()
                                                 ReplyCodeDebitCardEmpat:
                                                 printf("Apakah Ingin Mengulangi Kode Debit ? (y/n)");
                                                 scanf(" %c", &reCodeDebitCard);
-                                                
+                                                while(getchar() != '\n');
                                                 if(reCodeDebitCard == 'y' || reCodeDebitCard == 'Y') {
                                                     DebitFail = 1;
                                                     
@@ -1005,7 +1045,7 @@ int main()
                                         }
                                         while(DebitFail == 1);
                                         
-                                        system("cls");
+                                        system("clear");
                                         printf("\n\t\t\t\t\t MarketKu\n");
                                         
                                         printf("\t=========================================================================\n");
@@ -1043,9 +1083,9 @@ int main()
                                         
                                         printf("\t| %51s | %-15d |\n", "Total", totalPrice);
                             
-                                        Discount == 0 ? printf("") : printf("\t| %51s | %-15d |\n", "Diskon", Discount);
+                                        Discount == 0 ? printf("") : printf("\t| %51s | %-15d%% |\n", "Diskon", Discount);
                                         
-                                        MemberOn == 1 ? printf("\t| %51s | %-15s |\n", "Member", "10%") : printf("");
+                                        MemberOn == 1 ? printf("\t| %51s | %-15d%% |\n", "Member", discountCodeMember[AmbilDiskon]) : printf("");
                                         DebitPayment = DebitOn == 1 ? (totalPrice * 5) / 100 : 0;
                                         printf("\t| %51s | %-15s |\n", "Pajak", "10%");
                                         
@@ -1109,7 +1149,7 @@ int main()
                                                 ReplyCodeCreditCardSatu:
                                                 printf("Apakah Ingin Mengulangi Kode Kredit ? (y/n)");
                                                 scanf(" %c", &reCodeCreditCard);
-                                                
+                                                while(getchar() != '\n');
                                                 if(reCodeCreditCard == 'y' || reCodeCreditCard == 'Y') {
                                                     CreditFail = 1;
                                                     
@@ -1132,7 +1172,7 @@ int main()
                                         while(CreditFail == 1);
                                         
                                         
-                                        system("cls");
+                                        system("clear");
                                         printf("\n\t\t\t\t\t MarketKu\n");
                                         
                                         printf("\t=========================================================================\n");
@@ -1169,9 +1209,9 @@ int main()
                                         
                                         printf("\t| %51s | %-15d |\n", "Total", totalPrice);
                             
-                                        Discount == 0 ? printf("") : printf("\t| %51s | %-15d |\n", "Diskon", Discount);
+                                        Discount == 0 ? printf("") : printf("\t| %51s | %-15d%% |\n", "Diskon", Discount);
                                         
-                                        MemberOn == 1 ? printf("\t| %51s | %-15s |\n", "Member", "10%") : printf("");
+                                        MemberOn == 1 ? printf("\t| %51s | %-15d%% |\n", "Member", discountCodeMember[AmbilDiskon]) : printf("");
                                         CreditPayment = CreditOn == 1 ? (totalPrice * 5) / 100 : 0;
                                         printf("\t| %51s | %-15s |\n", "Pajak", "10%");
                                         
@@ -1207,7 +1247,7 @@ int main()
                                                 ReplyCodeCreditCardDua:
                                                 printf("Apakah Ingin Mengulangi Kode Kredit ? (y/n)");
                                                 scanf(" %c", &reCodeCreditCard);
-                                                
+                                                while(getchar() != '\n');
                                                 if(reCodeCreditCard == 'y' || reCodeCreditCard == 'Y') {
                                                     CreditFail = 1;
                                                     
@@ -1228,8 +1268,8 @@ int main()
                                             }
                                         }
                                         while(CreditFail == 1);
-//                                        
-                                        system("cls");
+                                      
+                                        system("clear");
                                         printf("\n\t\t\t\t\t MarketKu\n");
                                         
                                         printf("\t=========================================================================\n");
@@ -1266,9 +1306,9 @@ int main()
                                         
                                         printf("\t| %51s | %-15d |\n", "Total", totalPrice);
                             
-                                        Discount == 0 ? printf("") : printf("\t| %51s | %-15d |\n", "Diskon", Discount);
+                                        Discount == 0 ? printf("") : printf("\t| %51s | %-15d%% |\n", "Diskon", Discount);
                                         
-                                        MemberOn == 1 ? printf("\t| %51s | %-15s |\n", "Member", "10%") : printf("");
+                                        MemberOn == 1 ? printf("\t| %51s | %-15d%% |\n", "Member", discountCodeMember[AmbilDiskon]) : printf("");
                                         CreditPayment = CreditOn == 1 ? (totalPrice * 5) / 100 : 0;
                                         printf("\t| %51s | %-15s |\n", "Pajak", "10%");
                                         
@@ -1305,7 +1345,7 @@ int main()
                                                 ReplyCodeCreditCardTiga:
                                                 printf("Apakah Ingin Mengulangi Kode Kredit ? (y/n)");
                                                 scanf(" %c", &reCodeCreditCard);
-                                                
+                                                while(getchar() != '\n');
                                                 if(reCodeCreditCard == 'y' || reCodeCreditCard == 'Y') {
                                                     CreditFail = 1;
                                                     
@@ -1327,7 +1367,7 @@ int main()
                                         }
                                         while(CreditFail == 1);
                                         
-                                        system("cls");
+                                        system("clear");
                                         printf("\n\t\t\t\t\t MarketKu\n");
                                         
                                         printf("\t=========================================================================\n");
@@ -1366,7 +1406,7 @@ int main()
                             
                                         Discount == 0 ? printf("") : printf("\t| %51s | %-15d %% |\n", "Diskon", Discount);
                                         
-                                        MemberOn == 1 ? printf("\t| %51s | %-15s |\n", "Member", "10%") : printf("");
+                                        MemberOn == 1 ? printf("\t| %51s | %-15d%% |\n", "Member", discountCodeMember[AmbilDiskon]) : printf("");
                                         CreditPayment = CreditOn == 1 ? (totalPrice * 5) / 100 : 0;
                                         printf("\t| %51s | %-15s |\n", "Pajak", "10%");
                                         
@@ -1401,11 +1441,11 @@ int main()
                     break;
                 case 4:
                     if(BuyCount < 1) {
-                        system("cls");
+                        system("clear");
                         printf("\nItem Yang Ada Ambil Tidak Ada \n\n");
                         goto MenuMoreFail;
                     }
-                    system("cls");
+                    system("clear");
                     printf("\n");
                     totalPriceInvent = 0;
                     printf("\n\t\t\t\t       Daftar Barang Yang Diambil \n");
@@ -1462,7 +1502,7 @@ int main()
                     
                     switch(getDetailInvent) {
                         case 1:
-                            system("cls");
+                            system("clear");
                             goto MenuMore;
                             break;
                         case 2:
@@ -1516,14 +1556,14 @@ int main()
                                         }
                                         
                                         BuyCount = BuyCount - 1;
-                                        system("cls");
+                                        system("clear");
                                         printf("Item Berhasil Di Kurangi Dan Di Batalkan \n");
                                         
                                         goto MenuMore;
                                     }
                                     
                                     BuyTotal[forRemove] = BuyTotal[forRemove] - getReduceItem;                    
-                                    system("cls");
+                                    system("clear");
                                     printf("Item Berhasil Di Kurangi Jumlahnya \n");
                                     
                                     goto MenuMore;
@@ -1535,7 +1575,7 @@ int main()
                             ReplyReduceQty:
                             printf("Apakah Anda Ingin Memasukkan Ulang ? (y/n) ");
                             scanf(" %c", &reRemove);
-                            
+                            while(getchar() != '\n');
                             if(reRemove == 'y' || reRemove == 'Y') {
                                 reRemove = '\0';
                                 goto ReplyCodeReduceQty;
@@ -1575,7 +1615,7 @@ int main()
                                     }
                                     
                                     BuyCount = BuyCount - 1;
-                                    system("cls");
+                                    system("clear");
                                     printf("Item Berhasil Di Batalkan \n");
                                     
                                     goto MenuMore;
@@ -1587,7 +1627,7 @@ int main()
                             ReplyRemove:
                             printf("Apakah Anda Ingin Memasukkan Ulang ? (y/n) ");
                             scanf(" %c", &reRemove);
-                            
+                            while(getchar() != '\n');
                             if(reRemove == 'y' || reRemove == 'Y') {
                                 reRemove = '\0';
                                 goto ReplyCodeRemove;
@@ -1608,16 +1648,19 @@ int main()
                             break;
                     }
                     break;
-                    
+                case 5:
+                    system("clear");
+                    goto MenuUtama;
+                    break;
                 default:
-                    system("cls");
+                    system("clear");
                     printf("Menu Hanya Ada Dari 1 - 4 \n");
                     printf("\nApakah Anda Ingin Menambah Item Lagi ? \n");
                     goto MenuMoreFail;
             }
             break;
         case 2:
-            system("cls");
+            system("clear");
             MemberMenusLabel:
             printf("\n\t\t====================================================== \n");
             printf("\t\t| %-7s | %-40s | \n", "1." ,"Daftar Member");
@@ -1635,7 +1678,7 @@ int main()
             
             switch(getMemberMenu) {
                 case 1:
-                    system("cls");
+                    system("clear");
                     printf("\nMasukkan Nama Anda : ");
                     scanf(" %[^\n]%*c", getName);
                     printf("Masukkan Alamat Anda : ");
@@ -1654,7 +1697,7 @@ int main()
                     goto MemberMenusLabel;
                     break;
                 case 2:
-                    system("cls");
+                    system("clear");
                     printf("\n");
                     printf("\n\t\t========================\n");
                     printf("\t\t| %-10s | %-5s  | \n", "Kode" ,"Diskon");
@@ -1666,7 +1709,7 @@ int main()
                     goto MemberMenusLabel;
                     break;
                 case 3:
-                    system("cls");
+                    system("clear");
                     goto MenuUtama;
                     break;
                 default:
@@ -1676,9 +1719,24 @@ int main()
             
             break;
         default:
+            system("clear");
             printf("Pilihan Hanya Ada 0, 1 dan 2 \n\n");
             goto MenuUtama;
     }
     
     return 0;
+}
+
+int checkInteger(char HandleI[100]){
+    int length = strlen(HandleI);
+    
+    return length;
+}
+
+bool checkIsDigit(char HandleA[100]) {
+    if(!isdigit(HandleA[0])) {
+        return false;
+    } else {
+        return true;
+    }
 }
